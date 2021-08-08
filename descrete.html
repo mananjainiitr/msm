@@ -209,7 +209,17 @@
     document.getElementById("messages").innerHTML += i ;
     function myFunction(x) {
                 if (x.matches) { // If media query matches
-                    document.querySelector(".show").innerHTML = "show";
+                    var count = 0
+                //     while(document.getElementsByClassName("show")[count])
+                //     {
+                //     document.getElementsByClassName("show")[count].innerHTML = "show";
+                //     count++;
+                // }
+                var x = document.getElementsByClassName("show");
+                while(x[count]){
+                document.getElementsByClassName("show")[count].innerHTML = "show";
+            count ++;
+            }
                 }
                 }
 
