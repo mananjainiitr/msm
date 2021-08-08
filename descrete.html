@@ -1,6 +1,16 @@
 <html>
 <head>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+
+
     <style>
+        li{
+            font-size : 25px;
+            color: rgb(0, 0, 94);
+            line-height: 30px ;
+            
+            
+        }
     input{
         margin-top: 5px;
     }
@@ -35,11 +45,20 @@
         max-width:400px;
         word-wrap    : break-word;
         overflow-wrap: break-word;
+        font-family: 'Sofia';font-size: 22px;
         
 
 
     }
+    .write{
+        display: flex;
+        flex-wrap: wrap;
+    }
     @media only screen and (max-width: 1400px ) {
+        .show{
+        margin-top: 5px;
+        height : 21px;
+    }
     .messages{
         padding-top:100px;
     }
@@ -67,6 +86,7 @@
     body{
         background-color: #1b1b1b;
     }
+  
     </style>
 </head>  
 
@@ -205,7 +225,7 @@
     load()
     
     i+="<h1>"+snapshot.val().heading+"</h1>" +"<br>";
-    i+="<div class = 'flex' >"+snapshot.val().sender+"<div class = 'notes' id = \""+snapshot.val().heading+"\"><div class = 'notes' id = \""+snapshot.val().heading+"a"+"\" style='overflow-y: scroll;'><ul id = \""+snapshot.val().heading+"ul"+"\"list"+">"+j+"</ul><br></div><div class = 'write'><form id = \""+snapshot.val().heading+"fill"+"\" onsubmit = add(\""+snapshot.val().heading+"\") class = 'fill'> <input style='width:30vw;' id = \""+snapshot.val().heading+"input\""+"type='text'><button  onclick = 'add(\""+snapshot.val().heading+"\")' value="+snapshot.val().heading+">add</button></form><button class='show'id = \""+snapshot.val().heading+"show"+"\"onclick = 'show(\""+snapshot.val().heading+"\")' value='hide'>hide</button></div></div></div>"+"<br><br>";
+    i+="<div class = 'flex' >"+snapshot.val().sender+"<div class = 'notes' id = \""+snapshot.val().heading+"\"><h1 style = 'color:white; margin-left:50px'>Notes</h1><div class = 'notes' id = \""+snapshot.val().heading+"a"+"\" style='overflow-y: scroll;'><ul id = \""+snapshot.val().heading+"ul"+"\"list"+">"+j+"</ul><br></div><div class = 'write'><form id = \""+snapshot.val().heading+"fill"+"\" onsubmit = add(\""+snapshot.val().heading+"\") class = 'fill'> <input style='width:30vw;' id = \""+snapshot.val().heading+"input\""+"type='text'><button  onclick = 'add(\""+snapshot.val().heading+"\")' value="+snapshot.val().heading+">add</button></form><button class='show'id = \""+snapshot.val().heading+"show"+"\"onclick = 'show(\""+snapshot.val().heading+"\")' value='hide'>hide</button></div></div></div>"+"<br><br><br><br><br><br>";
     document.getElementById("messages").innerHTML += i ;
     function myFunction(x) {
                 if (x.matches) { // If media query matches
