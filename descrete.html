@@ -9,12 +9,14 @@
     }
     .flex{
         display: flex;
-  background-color: rgb(66, 66, 66);
+        flex-wrap:wrap;
+        background-color: #1b1b1b;
   justify-content: space-between;
   align-items: center;
   width:100vw;
 
     }
+    
     iframe{
         width:60vw;
        
@@ -37,18 +39,45 @@
 
 
     }
+    @media only screen and (max-width: 1400px ) {
+    .messages{
+        padding-top:100px;
+    }
+        iframe{
+        width:95vw;
+       
+    }
+    .notes{
+        background-color: rgb(255, 255, 255);
+        height:0px;
+        width:95vw;
+        margin-right: 0px;
+        
+    }
     
+
+    .flex{
+        justify-content: center;
+    }
+    
+    }
+    h1{
+        color: #ffff;
+    }
+    body{
+        background-color: #1b1b1b;
+    }
     </style>
 </head>  
 
 <body >
     <h1>Descrete maths</h1>
-    <div id="messages"></div>
+    <div id="messages">
     <input id = "head" type="text" placeholder="please enter heading here" style="width:20vw;height:5vw">
     <input id = "code" type="text" placeholder="please enter code here" style="width:50vw;height:5vw">
     
     <button onclick="myfunc()" style="height:5vw; width:7vw;"id = "submit">Submit</button>
-
+</div>
     
 
 </body>
@@ -77,7 +106,7 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
-    
+      
       function myfunc()
                 {
                     videocode = document.getElementById("code").value
@@ -91,9 +120,35 @@
                     });
                     
                 }
+                var sh = 0;
+                
+    function show(e)
+    {   if(sh%2 == 0){
+        console.log(e);
+        document.getElementById(e).style.height = "400px";
+        document.getElementById(e+"a").style.height = "400px";
+        document.getElementById(e+"show").innerHTML = "hide";
+        sh++;
+    }
+        else{
+            document.getElementById(e).style.height = "0px";
+            document.getElementById(e+"a").style.height = "0px";
+            document.getElementById(e+"show").innerHTML = "show";
+            sh++;
+
+        }
+    }
+
         function add(e)
-        {
-            console.log(e);
+        {       var form = document.getElementById(e+"fill");
+
+            // Adds a listener for the "submit" event.
+            form.addEventListener('submit', function(event) {
+
+            event.preventDefault();
+
+            });
+            
             var notes = localStorage.getItem(e);
             if(notes){
             notes = notes.replaceAll('"', "");
@@ -105,9 +160,11 @@
             console.log(notes)
 
             localStorage.setItem(e, JSON.stringify(notes));
-        load(e)
+        load(e);
+        return false;
         }
         function load(e){
+            
         if(localStorage.getItem(e)){
         var notes = document.getElementById(e+"input").value; 
         if(notes){
@@ -116,12 +173,15 @@
         j+= "<li>"+"&#8226;"+notes+"</li>";
         document.getElementById(e+"ul").innerHTML += j ;
         document.getElementById(e+"input").value = "";
+        return false;
         }
+       
     }
         
     firebase.database().ref("messages203").on("child_added",function(snapshot){
     var i = " " ;
     var j = " ";
+    
     function add()
     {
         var notes = localStorage.getItem(snapshot.val().heading);
@@ -145,10 +205,20 @@
     load()
     
     i+="<h1>"+snapshot.val().heading+"</h1>" +"<br>";
-    i+="<div class = 'flex' >"+snapshot.val().sender+"<div class = 'notes' id = "+snapshot.val().heading+" ><div style='overflow-y: scroll;height:400px;'><ul id = \""+snapshot.val().heading+"ul"+"\"list"+">"+j+"</ul><br></div><div class = 'write'><input style='width:30vw;' id = \""+snapshot.val().heading+"input\""+"type='text'><button onclick = 'add(\""+snapshot.val().heading+"\")' value="+snapshot.val().heading+">add</button></div></div></div>"+"<br><br>";
+    i+="<div class = 'flex' >"+snapshot.val().sender+"<div class = 'notes' id = \""+snapshot.val().heading+"\"><div class = 'notes' id = \""+snapshot.val().heading+"a"+"\" style='overflow-y: scroll;'><ul id = \""+snapshot.val().heading+"ul"+"\"list"+">"+j+"</ul><br></div><div class = 'write'><form id = \""+snapshot.val().heading+"fill"+"\" onsubmit = add(\""+snapshot.val().heading+"\") class = 'fill'> <input style='width:30vw;' id = \""+snapshot.val().heading+"input\""+"type='text'><button  onclick = 'add(\""+snapshot.val().heading+"\")' value="+snapshot.val().heading+">add</button></form><button class='show'id = \""+snapshot.val().heading+"show"+"\"onclick = 'show(\""+snapshot.val().heading+"\")' value='hide'>hide</button></div></div></div>"+"<br><br>";
     document.getElementById("messages").innerHTML += i ;
+    function myFunction(x) {
+                if (x.matches) { // If media query matches
+                    document.querySelector(".show").innerHTML = "show";
+                }
+                }
+
+                var x = window.matchMedia("(max-width: 1400px)")
+                myFunction(x) // Call listener function at run time
+                x.addListener(myFunction)
 
     });
+
                 
     </script>
 </html>
